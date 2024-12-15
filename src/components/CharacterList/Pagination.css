@@ -1,0 +1,36 @@
+/* Pagination.css */
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.page-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #198754;
+  font-size: 1rem;
+}
+
+.page-item.active .page-link {
+  background-color: #198754;
+  color: white;
+}
+
+.pagination .previous,
+.pagination .next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
