@@ -9,7 +9,7 @@ function Filter({ characters, onFilter, onLabelsChange }) {
   const [selectedGender, setSelectedGender] = useState(""); // Track selected gender
   const [searchQuery, setSearchQuery] = useState(""); // Track search query
   const [status, setStatus] = useState("");
-  const [filteredCharacters, setFilteredCharacters] = useState(characters); // Store filtered characters
+  // Store filtered characters
 
   // Extract unique species and gender values
   useEffect(() => {
@@ -40,8 +40,6 @@ function Filter({ characters, onFilter, onLabelsChange }) {
 
   useEffect(() => {
     let filtered = characters;
-    console.log(filtered);
-    console.log(selectedSpecies);
 
     if (status && status !== "") {
       filtered = filtered.filter((character) => character.status === status);
@@ -60,14 +58,6 @@ function Filter({ characters, onFilter, onLabelsChange }) {
         (character) => character.gender === selectedGender
       );
     }
-    console.log(selectedGender);
-    // Apply search query filter if entered
-    // if (searchQuery && searchQuery !== "") {
-    //   filtered = filtered.filter((character) =>
-    //     character.name.toLowerCase().includes(searchQuery.toLowerCase())
-    //   );
-    // }
-
     if (searchQuery && searchQuery !== "") {
       const query = searchQuery.trim().toLowerCase();
       const regex = new RegExp(`\\b${query}\\b`, "i"); // Kelime tam eşleşmesi için regex
@@ -77,9 +67,7 @@ function Filter({ characters, onFilter, onLabelsChange }) {
       );
     }
 
-    setFilteredCharacters(filtered.length > 0 ? filtered : characters);
     onFilter(filtered);
-    console.log(filtered);
 
     onLabelsChange({
       status,
@@ -87,24 +75,16 @@ function Filter({ characters, onFilter, onLabelsChange }) {
       selectedGender,
       searchQuery,
     });
-  }, [
-    selectedSpecies,
-    selectedGender,
-    searchQuery,
-    characters,
-    status,
-    onFilter,
-    onLabelsChange,
-  ]); // Re-run when any filter changes
+  }, [selectedSpecies, selectedGender, onFilter, onLabelsChange]); 
 
-  // clearAllInputs fonksiyonu
+
 
   return (
-    <div class="container card text-bg-dark mb-3">
-      <div class="card-body ">
+    <div className="container card text-bg-dark mb-3">
+      <div className="card-body ">
         <div className="row gap-5 gap-sm-3 justify-content-center">
           <div className="col-lg-4 ">
-            <div class="input-group">
+            <div className="input-group">
               <span className="input-group-text">
                 <FontAwesomeIcon
                   icon={faSearch}

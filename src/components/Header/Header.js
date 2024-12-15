@@ -20,14 +20,13 @@ function Header() {
               className="d-inline-block align-text-top"
             />
             <header className="text-success fw-bold fs-4">
-              {" "}
               Rick and Morty Characters
             </header>
           </a>
         </div>
       </nav>
-      <div  className={classes.mainImage} >
-        <img src={deneme} alt="Logo"/>
+      <div className={classes.mainImage}>
+        <img src={deneme} alt="Logo" />
       </div>
     </div>
   );

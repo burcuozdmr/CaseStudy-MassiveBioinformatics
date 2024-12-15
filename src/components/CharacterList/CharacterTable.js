@@ -1,41 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import Filter from "./Filter";
 import Label from "./Label";
-import { fetchCharacters } from "../../Api";
+
 import Pagination from "./Pagination";
 import RowNumber from "./RowNumber";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import CharacterCard from "./CharacterCard";
 
 function CharacterTable({ characters }) {
-  // const [characters, setCharacters] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0); // state to manage current page
+  const [pageNumber, setPageNumber] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const [filteredCharacters, setFilteredCharacters] = useState([]);
-  const [sortDirection, setSortDirection] = useState(null); // null means no sorting
+  const [sortDirection, setSortDirection] = useState(null);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  
 
-  // useEffect(() => {
-  //   fetchCharacters(pageNumber, rowsPerPage)
-  //     .then((data) => setCharacters(data.results))
-  //     .catch((error) => console.error(error));
-  // }, [pageNumber, rowsPerPage]);
+  const cardRef = useRef(null);
+
+  if (cardRef.current) {
+    cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
 
   const handleRowsChange = (rows) => {
     setRowsPerPage(rows); // Seçilen değeri kaydet
-    console.log("Selected rows per page:", rows);
+  
   };
-  // Calculate total pages
-
-  // const pageCount = Math.ceil(
-  //   (filteredCharacters.length > 0
-  //     ? filteredCharacters.length
-  //     : characters.length) / rowsPerPage
-  // );
-
-  // Slice characters array for the current page
-  const currentCharacters = (
-    filteredCharacters.length > 0 ? filteredCharacters : characters
-  ).slice(pageNumber * rowsPerPage, (pageNumber + 1) * rowsPerPage);
 
   const handlePageChange = (selectedPage) => {
     setPageNumber(selectedPage);
@@ -57,7 +48,6 @@ function CharacterTable({ characters }) {
     setFilters(updatedLabels);
   };
 
-
   const sortedCharacters = (charactersToSort) => {
     const sortedArray = [...charactersToSort];
     if (sortDirection === "asc") {
@@ -69,10 +59,14 @@ function CharacterTable({ characters }) {
   };
 
   // Combine filtered and original characters
-  const charactersToDisplay = filteredCharacters.length > 0 ? filteredCharacters : characters;
+  const charactersToDisplay =
+    filteredCharacters.length > 0 ? filteredCharacters : characters;
 
   // Sort characters
-  const sortedAndPagedCharacters = sortedCharacters(charactersToDisplay).slice(pageNumber * rowsPerPage, (pageNumber + 1) * rowsPerPage);
+  const sortedAndPagedCharacters = sortedCharacters(charactersToDisplay).slice(
+    pageNumber * rowsPerPage,
+    (pageNumber + 1) * rowsPerPage
+  );
 
   // Calculate total pages
   const pageCount = Math.ceil(charactersToDisplay.length / rowsPerPage);
@@ -86,35 +80,42 @@ function CharacterTable({ characters }) {
     });
   };
 
+  const handleRowClick = (char) => {
+    setSelectedCharacter(char); 
+
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight + 20);
+    }, 200);
+    
+  };
+
   return (
-    <div class="container mt-5">
+    <div className="container mt-5">
       <Filter
         characters={characters}
         onFilter={handleFilteredData}
         onLabelsChange={handleLabelsChange}
       ></Filter>
       <Label filters={filters}></Label>
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="table-responsive p-4 bg-success bg-opacity-25">
-              <table class="table table-hover table-success align-middle">
+      <div className="row">
+        <div className ="col-12">
+          <div className="card">
+            <div className="table-responsive p-4 bg-success bg-opacity-25">
+              <table className="table table-hover table-success align-middle">
                 <thead className="table-dark">
                   <tr>
                     <th scope="col">Image</th>
-                    <th scope="col" >
+                    <th scope="col">
                       Name{" "}
                       <FontAwesomeIcon
                         icon={faArrowUp}
                         style={{ cursor: "pointer", marginLeft: "10px" }}
                         onClick={handleSortChange}
-                        // Yukarı oka tıklanırsa ascending
                       />
                       <FontAwesomeIcon
                         icon={faArrowDown}
                         style={{ cursor: "pointer", marginLeft: "5px" }}
                         onClick={handleSortChange}
-                        // Aşağı oka tıklanırsa descending
                       />
                     </th>
                     <th scope="col">Gender</th>
@@ -123,11 +124,11 @@ function CharacterTable({ characters }) {
                 </thead>
                 {sortedAndPagedCharacters.map((char) => (
                   <tbody key={char.id}>
-                    <tr>
+                    <tr onClick={() => handleRowClick(char)} style={{ cursor: "pointer" }}>
                       <td>
                         <img
                           src={char.image}
-                          alt="Character Image"
+                          alt="Character"
                           style={{
                             maxWidth: "6rem",
                             height: "auto",
@@ -153,6 +154,7 @@ function CharacterTable({ characters }) {
           </div>
         </div>
       </div>
+      {selectedCharacter && <CharacterCard character={selectedCharacter} />}
     </div>
   );
 }

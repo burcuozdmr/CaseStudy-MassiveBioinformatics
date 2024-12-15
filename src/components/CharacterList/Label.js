@@ -1,56 +1,37 @@
 import React from "react";
 
-function Label({ filters}) {
-
+function Label({ filters }) {
   const { status, selectedSpecies, selectedGender, searchQuery } = filters;
-  
+
+
+  const filterLabels = [
+    { label: status, colorClass: 'success' },
+    { label: selectedSpecies, colorClass: 'primary' },
+    { label: selectedGender, colorClass: 'info' },
+    { label: searchQuery ? `Search: ${searchQuery}` : null, colorClass: 'warning' }
+  ];
+
+
+  const activeLabels = filterLabels.filter(item => item.label); 
+
   return (
-    <div class="container card text-bg-dark mb-3">
+    <div className="container card text-bg-dark mb-3">
       <div className="d-flex align-items-center ">
-        <div class="card-body d-flex align-items-center gap-2">
-          {status && (
-            <div
-              className="card text-bg-success text-center"
-              style={{ maxWidth: "10rem" }}
-            >
-              <div className="card-body text-light p-2">
-                <p className="card-text">{status}</p>
+        <div className="card-body d-flex align-items-center gap-2">
+       
+          {activeLabels.length > 0 ? (
+            activeLabels.map((item, index) => (
+              <div
+                key={index}
+                className={`card text-bg-${item.colorClass} text-center`}
+                style={{ maxWidth: "10rem" }}
+              >
+                <div className="card-body text-light p-2">
+                  <p className="card-text">{item.label}</p>
+                </div>
               </div>
-            </div>
-          )}
-          {selectedSpecies && (
-            <div
-              className="card text-bg-primary text-center"
-              style={{ maxWidth: "10rem" }}
-            >
-              <div className="card-body text-light p-2">
-                <p className="card-text">{selectedSpecies}</p>
-              </div>
-            </div>
-          )}
-
-          {selectedGender && (
-            <div
-              className="card text-bg-info text-center"
-              style={{ maxWidth: "10rem" }}
-            >
-              <div className="card-body text-light p-2">
-                <p className="card-text"> {selectedGender}</p>
-              </div>
-            </div>
-          )}
-
-          {searchQuery && (
-            <div
-              className="card text-bg-warning text-center"
-              style={{ maxWidth: "10rem" }}
-            >
-              <div className="card-body text-light p-2">
-                <p className="card-text">Search: {searchQuery}</p>
-              </div>
-            </div>
-          )}
-          {!status && !selectedSpecies && !selectedGender && !searchQuery && (
+            ))
+          ) : (
             <div
               className="card text-bg-success text-center"
               style={{ maxWidth: "10rem" }}
@@ -60,11 +41,6 @@ function Label({ filters}) {
               </div>
             </div>
           )}
-        </div>
-        <div>
-          <button type="button" class="btn btn-danger" >
-            Reset
-          </button>
         </div>
       </div>
     </div>

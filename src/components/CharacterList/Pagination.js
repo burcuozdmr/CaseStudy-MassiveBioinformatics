@@ -29,27 +29,11 @@ function Pagination({ pageCount, onPageChange }) {
             <AiFillRightCircle />
           </IconContext.Provider>
         }
-        marginPagesDisplayed={2} // Display 2 pages at the start and end
-        pageRangeDisplayed={2} // Display 2 pages in the middle
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={2}
       ></ReactPaginate>
     </div>
   );
 }
 
 export default Pagination;
-
-// <ReactPaginate
-//   previousLabel={"Previous"}
-//   nextLabel={"Next"}
-//   pageCount={pageCount}
-//   onPageChange={handlePageClick}
-//   containerClassName="pagination"
-//   pageClassName="pagination__item"
-//   pageLinkClassName="pagination__link"
-//   previousClassName="pagination__item"
-//   previousLinkClassName="pagination__link"
-//   nextClassName="pagination__item"
-//   nextLinkClassName="pagination__link"
-//   disabledClassName="disabled"
-//   activeClassName="active"
-// />

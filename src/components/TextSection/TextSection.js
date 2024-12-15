@@ -6,10 +6,9 @@ import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 function TextSection() {
   return (
     <div className="container">
-      <section className={`bg-success ${classes.summary}`}>
+      <section className={`bg-success ${classes.text}`}>
         <h2>Interdimensional Character Explorer</h2>
         <p>
-          {" "}
           Dive into the strange and chaotic world of Rick and Morty and discover
           your favorite characters
         </p>
