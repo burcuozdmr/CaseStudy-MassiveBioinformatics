@@ -8,9 +8,9 @@ function RowNumber({ onRowsChange }) {
     onRowsChange(value); // Pass the selected value to the parent
   };
   return (
-    <div className="d-flex justify-content-center align-items-center gap-2">
+    <div className="d-flex justify-content-center align-items-center flex-wrap gap-2">
       <select
-        className="rounded-pill p-2 bg-success text-light"
+        className="rounded-pill p-2 bg-success text-light "
         value={selectedRows}
         onChange={handleSelectChange}
       >

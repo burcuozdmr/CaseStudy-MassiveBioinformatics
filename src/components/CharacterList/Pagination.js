@@ -29,6 +29,8 @@ function Pagination({ pageCount, onPageChange }) {
             <AiFillRightCircle />
           </IconContext.Provider>
         }
+        marginPagesDisplayed={2} // Display 2 pages at the start and end
+        pageRangeDisplayed={2} // Display 2 pages in the middle
       ></ReactPaginate>
     </div>
   );
