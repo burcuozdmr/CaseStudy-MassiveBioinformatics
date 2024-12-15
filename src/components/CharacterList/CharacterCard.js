@@ -1,8 +1,10 @@
 import React from "react";
 
 function CharacterCard({ character }) {
+
+    // Extract the episode ID from each URL in the character.episode array
   const episodeNumbers = character.episode.map((url) => {
-    const episodeId = url.split("/").pop(); // URL'deki son kısmı (episode numarasını) alıyoruz
+    const episodeId = url.split("/").pop(); // Get the last part of the URL (episode ID)
     return episodeId;
   });
   return (
@@ -26,7 +28,7 @@ function CharacterCard({ character }) {
             {episodeNumbers.length > 0 ? (
                   episodeNumbers.map((episodeId, index) => (
                     <React.Fragment key={index}>
-                      {index > 0 && <span> - </span>} {/* Araya - ekleyin */}
+                      {index > 0 && <span> - </span>} 
                       <span>{episodeId}</span>
                     </React.Fragment>
                   ))

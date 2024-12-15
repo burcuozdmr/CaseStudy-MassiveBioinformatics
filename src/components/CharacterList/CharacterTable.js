@@ -16,26 +16,20 @@ function CharacterTable({ characters }) {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   
 
-  const cardRef = useRef(null);
-
-  if (cardRef.current) {
-    cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-
+    // Handler for updating the number of rows per page
   const handleRowsChange = (rows) => {
     setRowsPerPage(rows); // Seçilen değeri kaydet
   
   };
-
+  // Handler for page number change (pagination)
   const handlePageChange = (selectedPage) => {
     setPageNumber(selectedPage);
   };
-
+    // Handler for filtering the characters based on the Filter component
   const handleFilteredData = (filteredData) => {
     setFilteredCharacters(filteredData); // Store filtered data in parent state
   };
-
+   // State to store the selected filter values (status, species, gender, search query)
   const [filters, setFilters] = useState({
     status: "",
     selectedSpecies: "",
@@ -47,7 +41,7 @@ function CharacterTable({ characters }) {
   const handleLabelsChange = (updatedLabels) => {
     setFilters(updatedLabels);
   };
-
+ // Sorting function to sort characters based on name
   const sortedCharacters = (charactersToSort) => {
     const sortedArray = [...charactersToSort];
     if (sortDirection === "asc") {
@@ -74,12 +68,11 @@ function CharacterTable({ characters }) {
   // Handle sorting when icons are clicked
   const handleSortChange = () => {
     setSortDirection((prevState) => {
-      // Toggle sort direction
       if (prevState === "asc") return "desc"; // If it was ascending, change to descending
       return "asc"; // If it was descending or null, change to ascending
     });
   };
-
+  // Handle the row click to select a character and show its detailed card
   const handleRowClick = (char) => {
     setSelectedCharacter(char); 
 

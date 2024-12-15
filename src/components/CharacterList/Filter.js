@@ -5,39 +5,40 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 function Filter({ characters, onFilter, onLabelsChange }) {
   const [species, setSpecies] = useState([]);
   const [genders, setGenders] = useState([]);
-  const [selectedSpecies, setSelectedSpecies] = useState(""); // Track selected species
-  const [selectedGender, setSelectedGender] = useState(""); // Track selected gender
-  const [searchQuery, setSearchQuery] = useState(""); // Track search query
+  const [selectedSpecies, setSelectedSpecies] = useState(""); 
+  const [selectedGender, setSelectedGender] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState(""); 
   const [status, setStatus] = useState("");
-  // Store filtered characters
+ 
 
-  // Extract unique species and gender values
+  // useEffect hook to set unique species and genders when 'characters' data changes
   useEffect(() => {
     const uniqueSpecies = (characters) => {
-      const speciesSet = new Set(); // To store unique species
+      const speciesSet = new Set(); 
       characters.forEach((character) => {
         if (character.species) {
-          speciesSet.add(character.species); // Add species to the Set
+          speciesSet.add(character.species); 
         }
       });
-      return [...speciesSet]; // Convert Set to an array
+      return [...speciesSet]; 
     };
 
     const uniqueGenders = (characters) => {
-      const genderSet = new Set(); // To store unique gender
+      const genderSet = new Set(); 
       characters.forEach((character) => {
         if (character.gender) {
-          genderSet.add(character.gender); // Add gender to the Set
+          genderSet.add(character.gender); 
         }
       });
-      return [...genderSet]; // Convert Set to an array
+      return [...genderSet]; 
     };
 
-    // Update species and gender states
+  
     setSpecies(uniqueSpecies(characters));
     setGenders(uniqueGenders(characters));
-  }, [characters]); // Re-run when characters prop changes
+  }, [characters]); 
 
+   // useEffect hook to apply filters when any filter value changes
   useEffect(() => {
     let filtered = characters;
 
@@ -45,14 +46,14 @@ function Filter({ characters, onFilter, onLabelsChange }) {
       filtered = filtered.filter((character) => character.status === status);
     }
 
-    // Apply species filter if selected
+    
     if (selectedSpecies && selectedSpecies !== "") {
       filtered = filtered.filter(
         (character) => character.species === selectedSpecies
       );
     }
 
-    // Apply gender filter if selected
+  
     if (selectedGender && selectedGender !== "") {
       filtered = filtered.filter(
         (character) => character.gender === selectedGender
@@ -69,6 +70,7 @@ function Filter({ characters, onFilter, onLabelsChange }) {
 
     onFilter(filtered);
 
+     // Pass the current filter values to parent for state synchronization
     onLabelsChange({
       status,
       selectedSpecies,
@@ -84,6 +86,7 @@ function Filter({ characters, onFilter, onLabelsChange }) {
       <div className="card-body ">
         <div className="row gap-5 gap-sm-3 justify-content-center">
           <div className="col-lg-4 ">
+             {/* Search Input Field */}
             <div className="input-group">
               <span className="input-group-text">
                 <FontAwesomeIcon
@@ -98,12 +101,13 @@ function Filter({ characters, onFilter, onLabelsChange }) {
                 aria-label="Username"
                 aria-describedby="basic-addon1"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+                onChange={(e) => setSearchQuery(e.target.value)} 
               />
             </div>
           </div>
           <div className="col-lg-7 ">
             <div className="row gap-2">
+               {/* Filter Dropdowns */}
               <select
                 class="form-select form-select-md col"
                 aria-label="Large select example"
